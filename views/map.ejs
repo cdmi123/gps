@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live GPS Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 100vh; width: 100vw; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const socket = io();
+    const username = "<%= username %>";
+    const map = L.map('map').setView([20, 78], 5);
+    const users = {};
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    if ("geolocation" in navigator) {
+      navigator.geolocation.watchPosition(pos => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        socket.emit("location", { username, lat, lng });
+
+        if (!users[username]) {
+          users[username] = L.marker([lat, lng]).addTo(map).bindPopup(username);
+          map.setView([lat, lng], 16);
+        } else {
+          users[username].setLatLng([lat, lng]);
+        }
+      });
+    }
+
+    socket.on("location", data => {
+      const { username: u, lat, lng } = data;
+      if (u !== username) {
+        if (!users[u]) {
+          users[u] = L.marker([lat, lng]).addTo(map).bindPopup(u);
+        } else {
+          users[u].setLatLng([lat, lng]);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
