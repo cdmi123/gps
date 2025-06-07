@@ -17,5 +17,13 @@
     "url": "https://github.com/cdmi123/gps/issues"
   },
   "homepage": "https://github.com/cdmi123/gps#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "mongoose": "^8.15.1",
+    "socket.io": "^4.8.1"
+  }
 }
