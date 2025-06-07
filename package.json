@@ -1,0 +1,21 @@
+{
+  "name": "gps_tracking_app",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdmi123/gps.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cdmi123/gps/issues"
+  },
+  "homepage": "https://github.com/cdmi123/gps#readme",
+  "description": ""
+}
